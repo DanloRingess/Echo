@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.hexaltistas.Echo;
@@ -48,14 +49,34 @@ public abstract class AbstractScreen implements AppScreen {
     @Override
     public void show() {
 
-         Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(stage);
 
-         TextButton brasilButton = new TextButton("Padaria Brasil", skin);
-         TextButton angolaButton = new TextButton("Avenida de Angola", skin);
-         TextButton goaButton = new TextButton("Restaurante Goa", skin);
-         TextButton mocambiqueButton = new TextButton("Praça de Moçambique", skin);
+        TextButton brasilButton = new TextButton("Padaria Brasil", skin);
+        TextButton angolaButton = new TextButton("Avenida de Angola", skin);
+        TextButton goaButton = new TextButton("Restaurante Goa", skin);
+        TextButton mocambiqueButton = new TextButton("Praca de Mocambique", skin);
 
+        Table rightSideTable = new Table(skin);
+        Table leftSideTable = new Table(skin);
 
+        rightSideTable.setFillParent(true);
+        leftSideTable.setFillParent(true);
+
+        rightSideTable.right();
+        leftSideTable.center();
+
+        rightSideTable.add(brasilButton);
+        rightSideTable.row().pad(50);
+        rightSideTable.add(goaButton);
+        rightSideTable.toFront();
+
+        leftSideTable.add(angolaButton);
+        leftSideTable.row().pad(200);
+        leftSideTable.add(mocambiqueButton);
+        leftSideTable.toFront();
+
+        stage.addActor(rightSideTable);
+        stage.addActor(leftSideTable);
     }
 
     @Override
