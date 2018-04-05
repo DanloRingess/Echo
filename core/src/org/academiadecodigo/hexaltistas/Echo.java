@@ -64,6 +64,8 @@ public class Echo extends Game {
 
 	@Override
 	public void render () {
+	    super.render();
+	    loadSpriteBatch();
 		//super.render();
 	}
 
@@ -99,7 +101,6 @@ public class Echo extends Game {
 	}
 
 	private void loadSpriteBatch() {
-
 		batch.begin();
 		batch.draw(phone, 0, 0);
 		batch.draw(map, 333, 0);
