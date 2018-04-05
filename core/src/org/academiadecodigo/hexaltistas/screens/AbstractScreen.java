@@ -20,6 +20,9 @@ public abstract class AbstractScreen implements AppScreen {
     private TextureAtlas textureAtlas;
     private Viewport viewport;
 
+    private Texture phone;
+    private Texture map;
+
 
     private Stage stage;
 
@@ -35,23 +38,32 @@ public abstract class AbstractScreen implements AppScreen {
         this.viewport = game.getViewport();
         viewport.apply(true);
 
+
+        phone = new Texture("phone.jpeg");
+        map = new Texture("map.jpg");
+
         stage = new Stage(viewport, batch);
     }
 
     @Override
     public void show() {
+
          Gdx.input.setInputProcessor(stage);
 
          TextButton brasilButton = new TextButton("Padaria Brasil", skin);
          TextButton angolaButton = new TextButton("Avenida de Angola", skin);
          TextButton goaButton = new TextButton("Restaurante Goa", skin);
          TextButton mocambiqueButton = new TextButton("Praça de Moçambique", skin);
+
+
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        loadSpriteBatch();
 
         stage.act(delta);
         stage.draw();
@@ -80,5 +92,12 @@ public abstract class AbstractScreen implements AppScreen {
     @Override
     public void dispose() {
 
+    }
+
+    private void loadSpriteBatch() {
+        batch.begin();
+        batch.draw(phone, 0, 0);
+        batch.draw(map, 333, 0);
+        batch.end();
     }
 }

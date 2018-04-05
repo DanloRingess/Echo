@@ -25,8 +25,6 @@ public class Echo extends Game {
  	private Camera camera;
 	private Viewport viewport;
 
-	private Texture phone;
- 	private Texture map;
 
 	@Override
 	public void create () {
@@ -38,11 +36,6 @@ public class Echo extends Game {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-
-		phone = new Texture("phone.jpeg");
-		map = new Texture("map.jpg");
-
-		loadSpriteBatch();
 
 		AppScreen inactiveScreen = new InactiveScreen(this);
 		AppScreen activeScreen = new ActiveScreen(this);
@@ -59,7 +52,6 @@ public class Echo extends Game {
 	@Override
 	public void render () {
 	    super.render();
-	    loadSpriteBatch();
 	}
 
 	@Override
@@ -91,12 +83,5 @@ public class Echo extends Game {
 
 	public Viewport getViewport() {
 		return viewport;
-	}
-
-	private void loadSpriteBatch() {
-		batch.begin();
-		batch.draw(phone, 0, 0);
-		batch.draw(map, 333, 0);
-		batch.end();
 	}
 }
