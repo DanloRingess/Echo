@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import org.academiadecodigo.hexaltistas.model.PlaceType;
 import org.academiadecodigo.hexaltistas.screens.*;
 
 import java.util.HashMap;
@@ -24,6 +25,8 @@ public class Echo extends Game {
 	private TextureAtlas textureAtlas;
  	private Camera camera;
 	private Viewport viewport;
+
+	private PlaceType placeType;
 
 
 	@Override
@@ -83,5 +86,10 @@ public class Echo extends Game {
 
 	public Viewport getViewport() {
 		return viewport;
+	}
+
+	public void setplaceId(PlaceType placeType) {
+
+		this.placeType = placeType;
 	}
 }

@@ -5,12 +5,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import org.academiadecodigo.hexaltistas.Echo;
+import org.academiadecodigo.hexaltistas.model.PlaceType;
 
 public abstract class AbstractScreen implements AppScreen {
 
@@ -23,7 +26,6 @@ public abstract class AbstractScreen implements AppScreen {
 
     private Texture phone;
     private Texture map;
-
 
     private Stage stage;
 
@@ -51,32 +53,8 @@ public abstract class AbstractScreen implements AppScreen {
 
         Gdx.input.setInputProcessor(stage);
 
-        TextButton brasilButton = new TextButton("Padaria Brasil", skin);
-        TextButton angolaButton = new TextButton("Avenida de Angola", skin);
-        TextButton goaButton = new TextButton("Restaurante Goa", skin);
-        TextButton mocambiqueButton = new TextButton("Praca de Mocambique", skin);
+        setupTables();
 
-        Table rightSideTable = new Table(skin);
-        Table leftSideTable = new Table(skin);
-
-        rightSideTable.setFillParent(true);
-        leftSideTable.setFillParent(true);
-
-        rightSideTable.right();
-        leftSideTable.center();
-
-        rightSideTable.add(brasilButton);
-        rightSideTable.row().pad(50);
-        rightSideTable.add(goaButton);
-        rightSideTable.toFront();
-
-        leftSideTable.add(angolaButton);
-        leftSideTable.row().pad(200);
-        leftSideTable.add(mocambiqueButton);
-        leftSideTable.toFront();
-
-        stage.addActor(rightSideTable);
-        stage.addActor(leftSideTable);
     }
 
     @Override
@@ -121,4 +99,82 @@ public abstract class AbstractScreen implements AppScreen {
         batch.draw(map, 333, 0);
         batch.end();
     }
+
+    private void setupTables() {
+
+        TextButton leavePlaceButton = new TextButton("Leave Place", skin);
+        TextButton exitAppButton = new TextButton("Exit App Demo", skin);
+
+        leavePlaceButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("changed to inactive screen");
+                game.setScreen(ScreenType.INACTIVE_SCREEN);
+            }
+        });
+
+        exitAppButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("exiting app");
+                Gdx.app.exit();
+            }
+        });
+
+        TextButton brasilButton = new TextButton("Padaria Brasil", skin);
+        TextButton angolaButton = new TextButton("Avenida de Angola", skin);
+        TextButton goaButton = new TextButton("Restaurante Goa", skin);
+        TextButton mocambiqueButton = new TextButton("Praca de Mocambique", skin);
+
+        addClickListener(brasilButton, PlaceType.BRASIL);
+        addClickListener(angolaButton, PlaceType.ANGOLA);
+        addClickListener(goaButton, PlaceType.GOA);
+        addClickListener(mocambiqueButton, PlaceType.MOCAMBIQUE);
+
+        Table rightSideTable = new Table(skin);
+        Table leftSideTable = new Table(skin);
+
+        rightSideTable.setFillParent(true);
+        leftSideTable.setFillParent(true);
+
+        rightSideTable.right();
+        rightSideTable.bottom();
+        leftSideTable.center();
+        leftSideTable.bottom();
+
+        rightSideTable.add(brasilButton);
+        rightSideTable.row().pad(150);
+        rightSideTable.add(goaButton);
+        rightSideTable.row().pad(50);
+        rightSideTable.add(leavePlaceButton);
+
+        rightSideTable.toFront();
+
+        leftSideTable.add(angolaButton);
+        leftSideTable.row().pad(100);
+        leftSideTable.add(mocambiqueButton);
+        leftSideTable.row().pad(50);
+        leftSideTable.add(exitAppButton);
+
+        leftSideTable.toFront();
+
+        stage.addActor(rightSideTable);
+        stage.addActor(leftSideTable);
+    }
+
+    private void addClickListener(TextButton textButton, final PlaceType placeType) {
+
+        textButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("changed to active screen");
+                game.setplaceId(placeType);
+                game.setScreen(ScreenType.ACTIVE_SCREEN);
+            }
+        });
+    }
+
 }
