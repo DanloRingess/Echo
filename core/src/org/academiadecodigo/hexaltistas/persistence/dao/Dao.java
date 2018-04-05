@@ -4,7 +4,7 @@ import org.academiadecodigo.hexaltistas.model.Model;
 
 import java.util.List;
 
-public interface Dao<T extends Model> {
+public interface Dao<T> {
 
     List<T> findAll();
 

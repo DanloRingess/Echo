@@ -1,13 +1,24 @@
 package org.academiadecodigo.hexaltistas.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.sql.Timestamp;
 
+@Entity
+@Table (name = "shouts")
 public class Shout {
+
+    @Id
+    private Integer id ;
+    @CreationTimestamp
+    private Timestamp day;
 
     private Integer numberOfVotes ;
     private String msg;
-    private Integer id ;
-    private Timestamp day;
+
 
 
     public Integer getNumberOfVotes() {

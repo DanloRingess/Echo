@@ -1,12 +1,23 @@
 package org.academiadecodigo.hexaltistas.model;
 
+import javax.jws.WebParam;
+import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
-
+@Entity
+@Table (name = "places")
 public class Places {
 
+    @Id
+    private Integer id;
     private String name;
     private String info;
+    @OneToMany(
+            cascade = {CascadeType.ALL},
+            orphanRemoval = true,
+            mappedBy = "places",
+            fetch = FetchType.EAGER
+    )
     private List<Shout> shoutList= new LinkedList<Shout>();
 
     public String getName() {
