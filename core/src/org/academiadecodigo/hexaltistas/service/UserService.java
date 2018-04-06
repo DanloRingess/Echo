@@ -55,4 +55,8 @@ public class UserService {
     public void setTm(JpaTransactionManager tm) {
         this.tm = tm;
     }
+
+    public String fromServer(String msg){
+        return msg;
+    }
 }

@@ -11,18 +11,17 @@ public class ChatClient {
         PlayerNetwork playerNetwork = null;
         try {
 
-            String hostname="localhost";
-            int portNumber=9876;
+            String hostname = "192.168.1.20";
+            int portNumber = 6060;
 
 
             playerNetwork = new PlayerNetwork(hostname, portNumber);
             playerNetwork.init();
 
-            UserService userService = new UserService();
-            userService.setPlayerNetwork(playerNetwork);
 
             Thread thread = new Thread(playerNetwork);
             thread.start();
+
 
         } catch (IOException e) {
             e.printStackTrace();
