@@ -80,6 +80,7 @@ public class PlacesDao {
         List<Shout> top = null;
         try {
             EntityManager em = sm.getCurrentSession();
+            //Query q = em.createQuery("SELECT Shouts FROM Places ORDER BY numberOfVotes DESC");
             Query q = em.createQuery("SELECT * FROM Shouts ORDER BY numberOfVotes DESC");
             top = q.getResultList();
         } catch (HibernateException ex) {

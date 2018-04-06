@@ -99,8 +99,34 @@ public class UserService {
     }
 
     public String getPlaceName(Integer id) {
+        tm.beginRead();
         Places place = placesDao.findById(id);
+        tm.commit();
         return place.getName();
+    }
+
+    public String getPlaceInfo(Integer id) {
+        tm.beginRead();
+        String info = placesDao.findById(id).getInfo();
+        tm.commit();
+        return info;
+    }
+
+
+    public void voteUp(Integer idPlace, Integer id) {
+
+        try {
+            tm.beginWrite();
+
+         //   placesDao.
+
+            tm.commit();
+
+        } catch (TransactionException rb) {
+            tm.rollback();
+
+        }
+
     }
 
 
