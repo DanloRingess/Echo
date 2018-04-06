@@ -2,6 +2,8 @@ package org.academiadecodigo.hexaltistas;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,78 +20,123 @@ import java.util.Map;
 
 public class Echo extends Game {
 
-	private Map<ScreenType, AppScreen> screenMap;
+    private Map<ScreenType, AppScreen> screenMap;
 
-	private SpriteBatch batch;
-	private Skin appSkin;
-	private TextureAtlas textureAtlas;
- 	private Camera camera;
-	private Viewport viewport;
+    private SpriteBatch batch;
+    private Skin appSkin;
+    private TextureAtlas textureAtlas;
+    private Camera camera;
+    private Viewport viewport;
 
-	private PlaceType placeType;
+    private PlaceType placeType;
+
+    private Music music;
 
 
-	@Override
-	public void create () {
+    @Override
+    public void create() {
 
-		screenMap = new HashMap();
+        screenMap = new HashMap();
 
-		appSkin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
-		textureAtlas = new TextureAtlas("skin/flat-earth-ui.atlas");
-		batch = new SpriteBatch();
-		camera = new OrthographicCamera();
-		viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        appSkin = new Skin(Gdx.files.internal("skin/flat-earth-ui.json"));
+        textureAtlas = new TextureAtlas("skin/flat-earth-ui.atlas");
+        batch = new SpriteBatch();
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 
-		AppScreen inactiveScreen = new InactiveScreen(this);
-		AppScreen activeScreen = new ActiveScreen(this);
+        AppScreen inactiveScreen = new InactiveScreen(this);
+        AppScreen activeScreen = new ActiveScreen(this);
 
-		inactiveScreen.init();
-		activeScreen.init();
+        inactiveScreen.init();
+        activeScreen.init();
 
-		screenMap.put(ScreenType.INACTIVE_SCREEN, inactiveScreen);
-		screenMap.put(ScreenType.ACTIVE_SCREEN, activeScreen);
+        screenMap.put(ScreenType.INACTIVE_SCREEN, inactiveScreen);
+        screenMap.put(ScreenType.ACTIVE_SCREEN, activeScreen);
 
-		super.setScreen(inactiveScreen);
-	}
+        super.setScreen(inactiveScreen);
+        music = Gdx.audio.newMusic(Gdx.files.internal("davinci.ogg"));
+        music.setLooping(true);
+        music.play();
 
-	@Override
-	public void render () {
-	    super.render();
-	}
+    }
 
-	@Override
-	public void dispose () {
-		batch.dispose();
-		appSkin.dispose();
-		textureAtlas.dispose();
+    @Override
+    public void render() {
+        super.render();
+    }
 
-		for (AppScreen screen : screenMap.values()) {
-			screen.dispose();
-		}
-	}
+    @Override
+    public void dispose() {
+        batch.dispose();
+        appSkin.dispose();
+        textureAtlas.dispose();
 
-	public void setScreen(ScreenType screen) {
-		super.setScreen(screenMap.get(screen));
-	}
+        for (AppScreen screen : screenMap.values()) {
+            screen.dispose();
+        }
+    }
 
-	public SpriteBatch getBatch() {
-		return batch;
-	}
+    public void setScreen(ScreenType screen) {
+        super.setScreen(screenMap.get(screen));
 
-	public Skin getAppSkin() {
-		return appSkin;
-	}
+        music.stop();
 
-	public TextureAtlas getTextureAtlas() {
-		return textureAtlas;
-	}
+        switch (placeType) {
 
-	public Viewport getViewport() {
-		return viewport;
-	}
 
-	public void setplaceId(PlaceType placeType) {
+            case ANGOLA:
+                music = Gdx.audio.newMusic(Gdx.files.internal("angola.ogg"));
+                music.setLooping(true);
+                music.play();
+                break;
+            case GOA:
+                music = Gdx.audio.newMusic(Gdx.files.internal("goa.ogg"));
+                music.setLooping(true);
+                music.play();
+                break;
 
-		this.placeType = placeType;
-	}
+            case BRASIL:
+                music = Gdx.audio.newMusic(Gdx.files.internal("brasil.ogg"));
+                music.setLooping(true);
+                music.play();
+                break;
+
+            case MOCAMBIQUE:
+                music = Gdx.audio.newMusic(Gdx.files.internal("mocambique.ogg"));
+                music.setLooping(true);
+                music.play();
+                break;
+
+                default:
+                    music = Gdx.audio.newMusic(Gdx.files.internal("davinci.ogg"));
+                    music.setLooping(true);
+                    music.play();
+        }
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+
+    public Skin getAppSkin() {
+        return appSkin;
+    }
+
+    public TextureAtlas getTextureAtlas() {
+        return textureAtlas;
+    }
+
+    public Viewport getViewport() {
+        return viewport;
+    }
+
+    public void setplaceId(PlaceType placeType) {
+
+        this.placeType = placeType;
+    }
+
+    public void setMusic(ScreenType type) {
+
+    }
+
 }
