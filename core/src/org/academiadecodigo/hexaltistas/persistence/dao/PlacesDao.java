@@ -1,13 +1,16 @@
 package org.academiadecodigo.hexaltistas.persistence.dao;
 
 import org.academiadecodigo.hexaltistas.model.Places;
+import org.academiadecodigo.hexaltistas.model.Shout;
 import org.academiadecodigo.hexaltistas.persistence.TransactionException;
 import org.academiadecodigo.hexaltistas.persistence.jpa.JpaSessionManager;
 import org.hibernate.HibernateException;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlacesDao {
@@ -72,4 +75,19 @@ public class PlacesDao {
             throw new TransactionException(ex);
         }
     }
+
+    public List<Shout> findTop3() {
+        List<Shout> top = null;
+        try {
+            EntityManager em = sm.getCurrentSession();
+            //Query q = em.createQuery("SELECT Shouts FROM Places ORDER BY numberOfVotes DESC");
+            Query q = em.createQuery("SELECT * FROM Shouts ORDER BY numberOfVotes DESC");
+            top = q.getResultList();
+        } catch (HibernateException ex) {
+            throw new TransactionException(ex);
+
+        }
+        return top;
+    }
+
 }

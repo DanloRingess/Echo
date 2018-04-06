@@ -1,6 +1,5 @@
 package org.academiadecodigo.hexaltistas.model;
 
-import javax.jws.WebParam;
 import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,5 +41,9 @@ public class Places {
 
     public void setShoutList(List<Shout> shoutList) {
         this.shoutList = shoutList;
+    }
+
+    public void addShout(Shout shout){
+        shoutList.add(shout);
     }
 }

@@ -52,4 +52,14 @@ public class User {
     public void setVoted(HashMap<Places, Shout> voted) {
         this.voted = voted;
     }
+
+    public void addShout(Shout shout, Places places){
+        shouted.add(shout);
+        voted.put(places, shout);
+
+    }
+
+    public User getUser(){
+        return this;
+    }
 }
