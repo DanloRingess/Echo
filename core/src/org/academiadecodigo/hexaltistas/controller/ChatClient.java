@@ -11,7 +11,7 @@ public class ChatClient {
         PlayerNetwork playerNetwork = null;
         try {
 
-            String hostname = "192.168.1.20";
+            String hostname = "localhost";
             int portNumber = 6060;
 
 

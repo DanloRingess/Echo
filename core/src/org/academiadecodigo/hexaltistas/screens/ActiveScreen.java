@@ -4,9 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.academiadecodigo.hexaltistas.Echo;
+import org.academiadecodigo.hexaltistas.model.PlaceType;
+import org.academiadecodigo.hexaltistas.service.UserService;
 
 
 public class ActiveScreen extends AbstractScreen {
+
+    UserService userService;
 
     private Texture appBackground;
     private Table titleTable;
@@ -101,6 +105,7 @@ public class ActiveScreen extends AbstractScreen {
     public void init() {
         super.init();
 
+        userService = new UserService();
         titleTable.setFillParent(true);
 
         titleTable.top().left();
@@ -173,7 +178,7 @@ public class ActiveScreen extends AbstractScreen {
 
     private void setupAppTables() {
 
-        description.setText("string from DB");
+        description.setText(userService.createShout("create shout", PlaceType.ANGOLA.ordinal()));
 
         echo1.setText("string from DB");
         numberOfVotes1.setText("54");

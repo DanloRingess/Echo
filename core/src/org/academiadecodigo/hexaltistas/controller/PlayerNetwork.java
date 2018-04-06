@@ -17,6 +17,12 @@ public class PlayerNetwork implements Runnable {
     private Echo echo;
     private UserService userService;
 
+    public String getMsg() {
+        return msg;
+    }
+
+    String msg;
+
 
 
     PlayerNetwork(String hostName, int portNumber) throws IOException {
@@ -35,7 +41,7 @@ public class PlayerNetwork implements Runnable {
 
 
     public void sendMsg(String msg) {
-
+        userService.createShout("esdafd",2);
         toServer.println(msg);
     }
 
@@ -46,8 +52,10 @@ public class PlayerNetwork implements Runnable {
 
             try {
                 String msgFromServer = fromServer.readLine();
+                msg = msgFromServer;
 
                 userService.fromServer(msgFromServer);
+
 
             } catch (IOException e) {
                 e.printStackTrace();

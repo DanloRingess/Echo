@@ -2,24 +2,22 @@ package org.academiadecodigo.hexaltistas.service;
 
 import org.academiadecodigo.hexaltistas.controller.PlayerNetwork;
 import org.academiadecodigo.hexaltistas.model.User;
-import org.academiadecodigo.hexaltistas.persistence.dao.PlacesDao;
-import org.academiadecodigo.hexaltistas.persistence.dao.UserDao;
-import org.academiadecodigo.hexaltistas.persistence.jpa.JpaTransactionManager;
 
 
 public class UserService {
 
 
-    private JpaTransactionManager tm;
-    private UserDao userDao;
-    private PlacesDao placesDao;
     private User user;
     private PlayerNetwork playerNetwork;
+
+    private String top3;
+    private String last3;
+    private String info;
 
 
     public void getTopShouts(Integer placesId) {
 
-       playerNetwork.sendMsg("getTopShouts" + " " + placesId);
+        playerNetwork.sendMsg("getTopShouts" + " " + placesId);
 
     }
 
@@ -30,16 +28,17 @@ public class UserService {
 
     }
 
-    public void createShout(String msg, Integer placesId) {
+    public String createShout(String msg, Integer placesId) {
 
         playerNetwork.sendMsg("createShout" + " " + msg + " " + placesId);
+        return playerNetwork.getMsg();
 
     }
 
 
     public void voteUp(Integer idPlace, Integer id) {
 
-      playerNetwork.sendMsg("VoteUp" + " " + idPlace + " " + id);
+        playerNetwork.sendMsg("VoteUp" + " " + idPlace + " " + id);
 
     }
 
@@ -48,15 +47,41 @@ public class UserService {
         this.playerNetwork = playerNetwork;
     }
 
-    public void setDao(UserDao dao) {
-        this.userDao = dao;
+
+    public void fromServer(String msg) {
+
+        String[] words = msg.split(" ");
+
+
+        switch (words[0]) {
+
+
+            case "BESTTOP3":
+                top3 = msg;
+
+                break;
+
+            case "LAST3":
+                last3 = msg;
+
+                break;
+
+            case "PLACEINFO":
+                info=msg;
+
+                break;
+        }
     }
 
-    public void setTm(JpaTransactionManager tm) {
-        this.tm = tm;
+    public String getTop3() {
+        return top3;
     }
 
-    public String fromServer(String msg){
-        return msg;
+    public String getLast3() {
+        return last3;
+    }
+
+    public String getInfo() {
+        return info;
     }
 }
