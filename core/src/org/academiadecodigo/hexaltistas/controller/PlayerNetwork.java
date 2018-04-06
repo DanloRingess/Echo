@@ -1,6 +1,7 @@
 package org.academiadecodigo.hexaltistas.controller;
 
 import org.academiadecodigo.hexaltistas.Echo;
+import org.academiadecodigo.hexaltistas.service.UserService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public class PlayerNetwork implements Runnable {
     private PrintWriter toServer;
     private BufferedReader fromServer;
     private Echo echo;
+    private UserService userService;
 
 
 
@@ -26,6 +28,8 @@ public class PlayerNetwork implements Runnable {
         toServer = new PrintWriter(playerSocket.getOutputStream(), true);
         fromServer = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
 
+        userService = new UserService();
+        userService.setPlayerNetwork(this);
 
     }
 
@@ -42,10 +46,8 @@ public class PlayerNetwork implements Runnable {
 
             try {
                 String msgFromServer = fromServer.readLine();
-                System.out.println(msgFromServer);
-                //  decoder.decoding(msgFromServer);
 
-
+                userService.fromServer(msgFromServer);
 
             } catch (IOException e) {
                 e.printStackTrace();
