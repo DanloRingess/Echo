@@ -19,15 +19,15 @@ public abstract class AbstractScreen implements AppScreen {
 
     private Echo game;
 
-    private SpriteBatch batch;
-    private Skin skin;
-    private TextureAtlas textureAtlas;
-    private Viewport viewport;
+    protected SpriteBatch batch;
+    protected Skin skin;
+    protected TextureAtlas textureAtlas;
+    protected Viewport viewport;
 
-    private Texture phone;
-    private Texture map;
+    protected Texture phone;
+    protected Texture map;
 
-    private Stage stage;
+    protected Stage stage;
 
     public AbstractScreen(Echo game) {
         this.game = game;
@@ -53,8 +53,7 @@ public abstract class AbstractScreen implements AppScreen {
 
         Gdx.input.setInputProcessor(stage);
 
-        setupTables();
-
+        setupMapTables();
     }
 
     @Override
@@ -93,14 +92,14 @@ public abstract class AbstractScreen implements AppScreen {
 
     }
 
-    private void loadSpriteBatch() {
+    protected void loadSpriteBatch() {
         batch.begin();
         batch.draw(phone, 0, 0);
         batch.draw(map, 333, 0);
         batch.end();
     }
 
-    private void setupTables() {
+    private void setupMapTables() {
 
         TextButton leavePlaceButton = new TextButton("Leave Place", skin);
         TextButton exitAppButton = new TextButton("Exit App Demo", skin);
@@ -139,10 +138,8 @@ public abstract class AbstractScreen implements AppScreen {
         rightSideTable.setFillParent(true);
         leftSideTable.setFillParent(true);
 
-        rightSideTable.right();
-        rightSideTable.bottom();
-        leftSideTable.center();
-        leftSideTable.bottom();
+        rightSideTable.right().bottom();
+        leftSideTable.center().bottom();
 
         rightSideTable.add(brasilButton);
         rightSideTable.row().pad(150);
@@ -176,5 +173,4 @@ public abstract class AbstractScreen implements AppScreen {
             }
         });
     }
-
 }
