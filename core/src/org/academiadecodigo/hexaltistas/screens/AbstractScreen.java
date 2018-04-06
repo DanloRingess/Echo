@@ -17,7 +17,7 @@ import org.academiadecodigo.hexaltistas.model.PlaceType;
 
 public abstract class AbstractScreen implements AppScreen {
 
-    private Echo game;
+    protected Echo game;
 
     protected SpriteBatch batch;
     protected Skin skin;
@@ -31,6 +31,8 @@ public abstract class AbstractScreen implements AppScreen {
 
     public AbstractScreen(Echo game) {
         this.game = game;
+        phone = new Texture("phone.jpeg");
+        map = new Texture("map.jpg");
     }
 
     @Override
@@ -40,10 +42,6 @@ public abstract class AbstractScreen implements AppScreen {
         this.textureAtlas = game.getTextureAtlas();
         this.viewport = game.getViewport();
         viewport.apply(true);
-
-
-        phone = new Texture("phone.jpeg");
-        map = new Texture("map.jpg");
 
         stage = new Stage(viewport, batch);
     }

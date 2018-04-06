@@ -14,33 +14,48 @@ import org.academiadecodigo.hexaltistas.Echo;
 public class ActiveScreen extends AbstractScreen {
 
     private Texture appBackground;
+    Label title = new Label("About this location", game.getAppSkin());
+    TextButton test = new TextButton("test me up", game.getAppSkin());
+    Label description = new Label("some bs \n about this location", game.getAppSkin());
+    Table titleTable = new Table();
 
     public ActiveScreen(Echo game) {
         super(game);
+
         this.appBackground = new Texture("map_background.png");
+
+
+    }
+
+    @Override
+    public void init() {
+        super.init();
+
+        titleTable.setFillParent(true);
+
+        titleTable.top().left();
+
+        titleTable.add(title).pad(101, 30, 0, 0);
+        titleTable.row();
+        titleTable.add(description).pad(0, 30, 0, 0);
+        titleTable.row();
+        titleTable.add(test).pad(10, 30, 0, 0);
     }
 
     @Override
     public void show() {
-        super.show();
 
+        super.show();
         setupAppTables();
 
     }
 
     private void setupAppTables() {
 
-        Label title = new Label("About this location", skin);
-        TextButton test = new TextButton("test me up", skin);
+        test.setText("po caralho");
+        description.setText("po caralho");
 
-        Table titleTable = new Table();
-        titleTable.setFillParent(true);
 
-        titleTable.top().left();
-
-        titleTable.add(title).pad(101,30,0,0);
-        titleTable.row();
-        titleTable.add(test);
 
 
         stage.addActor(titleTable);
@@ -51,7 +66,9 @@ public class ActiveScreen extends AbstractScreen {
         batch.begin();
         batch.draw(phone, 0, 0);
         batch.draw(map, 333, 0);
-        batch.draw(appBackground,26,100 );
+        batch.draw(appBackground, 26, 100);
         batch.end();
     }
+
+
 }
