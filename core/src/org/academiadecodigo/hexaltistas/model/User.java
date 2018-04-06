@@ -1,16 +1,25 @@
 package org.academiadecodigo.hexaltistas.model;
 
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
+@Entity
+@Table (name = "users")
 public class User {
 
+    @Id
     private Integer id;
     private String name;
+    @OneToMany(
+            cascade = {CascadeType.ALL},
+            orphanRemoval = true,
+            mappedBy = "places",
+            fetch = FetchType.EAGER
+    )
     private List<Shout> shouted = new LinkedList<Shout>();
-    private HashMap<Places, Shout> voted = new HashMap<Places, Shout>();
 
+    private HashMap<Places, Shout> voted = new HashMap<Places, Shout>();
 
     public Integer getId() {
         return id;
