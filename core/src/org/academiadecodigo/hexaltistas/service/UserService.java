@@ -40,7 +40,6 @@ public class UserService {
 
         tm.commit();
         return topShouts;
-
     }
 
 
@@ -58,13 +57,11 @@ public class UserService {
             if ((shoutList.size() - (i + 1)) >= 0) {
                 lastShouts.add(shoutList.get(shoutList.size() - (i + 1)).getMsg());
             }
-
             i++;
         }
 
         tm.commit();
         return lastShouts;
-
     }
 
     public void createShout(String msg, Integer placesId) {
@@ -93,9 +90,7 @@ public class UserService {
 
         } catch (TransactionException rb) {
             tm.rollback();
-
         }
-
     }
 
     public String getPlaceName(Integer id) {
@@ -118,15 +113,33 @@ public class UserService {
         try {
             tm.beginWrite();
 
-         //   placesDao.
+            Shout shout = placesDao.findById(id).getShoutList().get(id);
+            Integer numVotes = shout.getNumberOfVotes();
+            shout.setNumberOfVotes(numVotes + 1);
+            placesDao.saveOrUpdate(placesDao.findById(id));
 
             tm.commit();
 
         } catch (TransactionException rb) {
             tm.rollback();
-
         }
+    }
 
+    public void voteDown(Integer idPlace, Integer id) {
+
+        try {
+            tm.beginWrite();
+
+            Shout shout = placesDao.findById(id).getShoutList().get(id);
+            Integer numVotes = shout.getNumberOfVotes();
+            shout.setNumberOfVotes(numVotes - 1);
+            placesDao.saveOrUpdate(placesDao.findById(id));
+
+            tm.commit();
+
+        } catch (TransactionException rb) {
+            tm.rollback();
+        }
     }
 
 
