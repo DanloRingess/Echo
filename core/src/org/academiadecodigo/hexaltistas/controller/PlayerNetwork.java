@@ -25,7 +25,7 @@ public class PlayerNetwork implements Runnable {
 
 
 
-    PlayerNetwork(String hostName, int portNumber) throws IOException {
+    public PlayerNetwork(String hostName, int portNumber) throws IOException {
         playerSocket = new Socket(hostName, portNumber);
 
     }
@@ -34,8 +34,8 @@ public class PlayerNetwork implements Runnable {
         toServer = new PrintWriter(playerSocket.getOutputStream(), true);
         fromServer = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
 
-        userService = new UserService();
-        userService.setPlayerNetwork(this);
+        userService = new UserService(this);
+
 
     }
 
@@ -65,5 +65,9 @@ public class PlayerNetwork implements Runnable {
 
     public void setEcho(Echo echo) {
         this.echo = echo;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 }

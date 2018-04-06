@@ -14,6 +14,9 @@ public class UserService {
     private String last3;
     private String info;
 
+    public UserService(PlayerNetwork playerNetwork) {
+        this.playerNetwork = playerNetwork;
+    }
 
     public void getTopShouts(Integer placesId) {
 
@@ -67,7 +70,7 @@ public class UserService {
                 break;
 
             case "PLACEINFO":
-                info=msg;
+                info = msg;
 
                 break;
         }
@@ -84,4 +87,6 @@ public class UserService {
     public String getInfo() {
         return info;
     }
+
+
 }

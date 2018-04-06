@@ -10,7 +10,7 @@ import org.academiadecodigo.hexaltistas.service.UserService;
 
 public class ActiveScreen extends AbstractScreen {
 
-    UserService userService;
+    private UserService userService;
 
     private Texture appBackground;
     private Table titleTable;
@@ -54,14 +54,16 @@ public class ActiveScreen extends AbstractScreen {
     private TextButton shoutButton;
 
 
-    public ActiveScreen(Echo game) {
+    public ActiveScreen(Echo game, UserService userService) {
         super(game);
+
+        this.userService=userService;
 
         this.appBackground = new Texture("map_background.png");
 
         titleTable = new Table();
         title = new Label("About this location", game.getAppSkin());
-        description = new Label("some bs \n about this location", game.getAppSkin());
+        description = new Label("", game.getAppSkin());
         top3 = new Label("Top 3 Echoes", game.getAppSkin());
         last3 = new Label("Last 3 Echoes", game.getAppSkin());
 
@@ -105,67 +107,66 @@ public class ActiveScreen extends AbstractScreen {
     public void init() {
         super.init();
 
-        userService = new UserService();
+
         titleTable.setFillParent(true);
 
         titleTable.top().left();
 
         titleTable.add(title).pad(101, 30, 0, 0);
-        titleTable.row();
+        titleTable.row().setActorHeight(1500);
         titleTable.add(description).pad(0, 30, 10, 0);
         titleTable.row();
-        titleTable.add(top3).padBottom(5);
+        titleTable.add(top3).pad(10, 100, 5, 0);
         titleTable.row();
 
-        titleTable.add(position1).padLeft(-120);
+        titleTable.add(position1).padLeft(-75);
         titleTable.add(voteBox1).padLeft(-200);
-        titleTable.add(numberOfVotes1);
+        titleTable.add(numberOfVotes1).padLeft(-120);
         titleTable.row();
-        titleTable.add(echo1);
+        titleTable.add(echo1).padLeft(20);
         titleTable.row();
 
-        titleTable.add(position2).padLeft(-120);
+        titleTable.add(position2).padLeft(-75);
         titleTable.add(voteBox2).padLeft(-200);
-        titleTable.add(numberOfVotes2);
+        titleTable.add(numberOfVotes2).padLeft(-120);
         titleTable.row();
-        titleTable.add(echo2);
+        titleTable.add(echo2).padLeft(20);
         titleTable.row();
 
-        titleTable.add(position3).padLeft(-120);
+        titleTable.add(position3).padLeft(-75);
         titleTable.add(voteBox3).padLeft(-200);
-        titleTable.add(numberOfVotes3);
+        titleTable.add(numberOfVotes3).padLeft(-120);
         titleTable.row();
-        titleTable.add(echo3);
-        titleTable.row();
-
-        titleTable.add(last3).padBottom(5);
+        titleTable.add(echo3).padLeft(20);
         titleTable.row();
 
-        titleTable.add(lastEcho1).padLeft(-120);
+        titleTable.add(last3).pad(10, 100, 5, 0);
+        titleTable.row();
+
+        titleTable.add(lastEcho1).padLeft(-75);
         titleTable.add(voteLast1).padLeft(-200);
-        titleTable.add(numberOfVotesLast1);
+        titleTable.add(numberOfVotesLast1).padLeft(-120);
         titleTable.row();
-        titleTable.add(echo4);
+        titleTable.add(echo4).padLeft(20);
         titleTable.row();
 
-        titleTable.add(position2).padLeft(-120);
+        titleTable.add(lastEcho2).padLeft(-75);
         titleTable.add(voteLast2).padLeft(-200);
-        titleTable.add(numberOfVotesLast2);
+        titleTable.add(numberOfVotesLast2).padLeft(-120);
         titleTable.row();
-        titleTable.add(echo5);
+        titleTable.add(echo5).padLeft(20);
         titleTable.row();
 
-        titleTable.add(position3).padLeft(-120);
+        titleTable.add(lastEcho3).padLeft(-75);
         titleTable.add(voteLast3).padLeft(-200);
-        titleTable.add(numberOfVotesLast3);
+        titleTable.add(numberOfVotesLast3).padLeft(-120);
         titleTable.row();
-        titleTable.add(echo6);
-        titleTable.row();
+        titleTable.add(echo6).padLeft(20);
+        titleTable.row().padTop(50);
 
-
-        //titleTable.row();
-        titleTable.add(textInput);
-        titleTable.add(shoutButton).pad(10, 30, 0, 0);
+        textInput.setMaxLength(40);
+        titleTable.add(textInput).padLeft(20).padTop(10);
+        titleTable.add(shoutButton).pad(10, 10, 0, 0);
     }
 
     @Override
@@ -178,7 +179,8 @@ public class ActiveScreen extends AbstractScreen {
 
     private void setupAppTables() {
 
-        description.setText(userService.createShout("create shout", PlaceType.ANGOLA.ordinal()));
+
+       // description.setText(userService.createShout("create shout", PlaceType.ANGOLA.ordinal()));
 
         echo1.setText("string from DB");
         numberOfVotes1.setText("54");
@@ -187,16 +189,16 @@ public class ActiveScreen extends AbstractScreen {
         numberOfVotes2.setText("35");
 
         echo3.setText("another string from db");
-        numberOfVotes3.setText("34");
+        numberOfVotes3.setText("22");
 
         echo4.setText("another string from db");
-        numberOfVotesLast1.setText("234");
+        numberOfVotesLast1.setText("14");
 
         echo5.setText("another string from db");
-        numberOfVotesLast1.setText("234");
+        numberOfVotesLast2.setText("8");
 
         echo6.setText("another string from db");
-        numberOfVotesLast1.setText("234");
+        numberOfVotesLast3.setText("0");
 
 
         stage.addActor(titleTable);
@@ -211,5 +213,7 @@ public class ActiveScreen extends AbstractScreen {
         batch.end();
     }
 
-
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 }
