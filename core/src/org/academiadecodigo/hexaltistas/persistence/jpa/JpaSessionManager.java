@@ -3,6 +3,7 @@ package org.academiadecodigo.hexaltistas.persistence.jpa;
 
 import org.academiadecodigo.hexaltistas.persistence.SessionManager;
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
